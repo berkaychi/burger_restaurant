@@ -1,5 +1,9 @@
 import { Inter } from "next/font/google";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Nav from "@/components/Nav";
 import "./globals.css";
+import Carousel from "@/components/Carousel";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +15,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <main className="app">
+          <Nav />
+          {children}
+        </main>
+        <Carousel />
+      </body>
     </html>
   );
 }
