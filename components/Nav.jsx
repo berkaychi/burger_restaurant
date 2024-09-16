@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaUserAlt } from "react-icons/fa";
 import { FaBasketShopping } from "react-icons/fa6";
-
+import Image from "next/image";
 import OutsideClickHandler from "react-outside-click-handler";
 import Search from "./Search";
 
@@ -19,9 +19,9 @@ const Nav = () => {
 
   return (
     <nav className="h-16 bg-secondary">
-      <div className="flex items-center justify-between h-full container mx-auto text-white px-6 sm:px-0">
+      <div className="flex items-center justify-between h-full container mx-auto text-white px-6">
         <Link href="/" className="flex hover:text-primary hover:transition-all">
-          FEANE
+          <Image src="/assets/images/babs-burger.png" width={60} height={60} />
         </Link>
 
         {/*#Desktop Navigation*/}
@@ -39,7 +39,7 @@ const Nav = () => {
           </div>
 
           <div className="flex">
-            <Link href="/" className="black_btn">
+            <Link href="/about" className="black_btn">
               HAKKIMIZDA
             </Link>
           </div>

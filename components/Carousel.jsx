@@ -13,13 +13,14 @@ const Carousel = () => {
         priority
       />
 
-      <div className="relative container  md:max-w-3xl md:mx-20 max-w-80 mx-5 top-40">
-        <h1 className="title">Fast Food Restaurant</h1>
+      <div className="relative container  md:max-w-3xl md:mx-20 max-w-80 mx-5 top-32">
+        <h1 className="title">%100 Dana Eti ve Taze Fırınlanmış Ekmekler</h1>
         <p className="text-white lg:text-2xl sm:text-xl black-text-shadow">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis earum
-          vero repellendus, fugiat ab quod, facilis nesciunt sint libero
-          accusantium nihil unde dolorem eum debitis sapiente nostrum! Fugiat,
-          quae cumque.
+          BAB&#39;s Burger olarak, burgerlerimizde sadece %100 dana eti
+          kullanıyoruz ve her gün kendi fırınımızda taze ekmek pişiriyoruz.
+          Misafirlerimize en iyi lezzeti sunmak için özenle hazırladığımız bu
+          burgerler, doğal ve kaliteli malzemelerle zenginleştirilir. Gerçek
+          burger deneyimini keşfetmek için sizi bekliyoruz!
         </p>
       </div>
     </div>
