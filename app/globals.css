@@ -13,6 +13,10 @@
   @apply rounded-full border border-primary bg-secondary py-1.5 px-5 text-white transition-all hover:bg-primary
    hover:text-white text-center text-sm flex items-center justify-center;
 }
+.menu_btn {
+  @apply rounded-full  py-1.5 px-5 border border-primary bg-secondary text-white transition-all hover:bg-secondary
+   hover:text-white text-center text-sm flex items-center justify-center;
+}
 
 .dropdown {
   @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-secondary min-w-[150px] flex flex-col gap-2 justify-end items-end;
@@ -51,4 +55,21 @@
   outline: none;
   background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.slick-dots {
+  @apply bg-gray-300;
+}
+
+.slick-dots li button::before {
+  font-size: 8px;
+  color: #222831;
+  opacity: 0.7;
+}
+
+.slick-dots li.slick-active button::before {
+  font-size: 20px;
+  color: #ffbe33;
+  opacity: 1;
+  transition: all;
 }

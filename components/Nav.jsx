@@ -33,7 +33,7 @@ const Nav = () => {
           </div>
 
           <div className="flex">
-            <Link href="/" className="black_btn">
+            <Link href="@/components/Menu" className="black_btn">
               MENÜ
             </Link>
           </div>
