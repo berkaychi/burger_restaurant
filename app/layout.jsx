@@ -4,9 +4,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Nav from "@/components/Nav";
 
 import "./globals.css";
-import Carousel from "@/components/Carousel";
-import Menu from "@/components/Menu";
-import BurgerSlider from "@/components/product/BurgerSlider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +20,6 @@ export default function RootLayout({ children }) {
           <Nav />
           {children}
         </main>
-        <Carousel />
-        <BurgerSlider />
       </body>
     </html>
   );

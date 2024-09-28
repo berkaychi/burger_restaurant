@@ -33,7 +33,7 @@ const Nav = () => {
           </div>
 
           <div className="flex">
-            <Link href="@/components/Menu" className="black_btn">
+            <Link href="/menu" className="black_btn">
               MENÜ
             </Link>
           </div>
@@ -47,14 +47,6 @@ const Nav = () => {
 
         <div className="sm:flex hidden gap-3">
           <button>
-            <FaUserAlt className="hover:text-primary transition-all" />
-          </button>
-
-          <button>
-            <FaBasketShopping className="hover:text-primary transition-all" />
-          </button>
-
-          <button>
             <FaSearch
               className="hover:text-primary transition-all"
               onClick={() => setisSearchClick(true)}
@@ -65,14 +57,6 @@ const Nav = () => {
         {/*#Mobile Navigation*/}
 
         <div className="sm:hidden flex relative gap-x-3 justify-between items-center">
-          <button>
-            <FaUserAlt className="hover:text-primary transition-all" />
-          </button>
-
-          <button>
-            <FaBasketShopping className="hover:text-primary transition-all" />
-          </button>
-
           <button>
             <FaSearch
               className="hover:text-primary transition-all"

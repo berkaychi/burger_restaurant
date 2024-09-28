@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
+import burgers from "@/components/product/Burgers";
 const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
 export default function BurgerSlider() {
@@ -12,13 +13,6 @@ export default function BurgerSlider() {
   useEffect(() => {
     setIsClient(true);
   }, []);
-
-  const burgers = [
-    { name: "3 Peynirli Burger", img: "/assets/images/bbq-burger.jpg" },
-    { name: "Atölye Burger", img: "/assets/images/bbq-burger.jpg" },
-    { name: "BBQ Burger", img: "/assets/images/bbq-burger.jpg" },
-    { name: "Black Star Burger", img: "/assets/images/bbq-burger.jpg" },
-  ];
 
   const settings = {
     dots: true,
@@ -58,26 +52,26 @@ export default function BurgerSlider() {
   };
 
   if (!isClient) {
-    return null; // Render nothing on the server
+    return null;
   }
 
   return (
     <div className="w-full bg-gray-300">
-      <h1 className="text-center text-3xl font-semibold mb-8 p-12 ">
+      <h1 className="text-center text-3xl font-semibold mb-4 p-8">
         Burgerlerimiz
       </h1>
       <Slider {...settings}>
         {burgers.map((burger, idx) => (
           <div key={idx} className="flex justify-center mx-auto">
-            <div className="w-full px-4">
+            <div className="w-full px-3">
               <Image
                 src={burger.img}
                 alt={burger.name}
-                className="rounded-lg"
+                className="rounded-lg cursor-pointer"
                 width={600}
                 height={500}
               />
-              <h3 className="text-center mt-4 text-lg font-semibold">
+              <h3 className="text-center mt-3 text-lg py-1 font-semibold">
                 {burger.name}
               </h3>
             </div>

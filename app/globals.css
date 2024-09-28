@@ -8,14 +8,23 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
-
 .black_btn {
   @apply rounded-full border border-primary bg-secondary py-1.5 px-5 text-white transition-all hover:bg-primary
    hover:text-white text-center text-sm flex items-center justify-center;
 }
 .menu_btn {
-  @apply rounded-full  py-1.5 px-5 border border-primary bg-secondary text-white transition-all hover:bg-secondary
-   hover:text-white text-center text-sm flex items-center justify-center;
+  @apply rounded-full border border-primary bg-secondary py-1.5 px-5 text-white transition-all hover:bg-primary
+   hover:text-white text-center text-lg flex items-center justify-center;
+}
+
+.active_btn {
+  @apply rounded-full border border-primary bg-primary py-1.5 px-5 text-secondary transition-all hover:bg-primary
+   hover:text-white text-center text-lg flex items-center justify-center;
+}
+
+.menu_title {
+  @apply text-secondary font-logoFont font-bold;
+  font-size: 32px;
 }
 
 .dropdown {
@@ -30,6 +39,10 @@
   @apply text-white font-logoFont font-bold;
   text-shadow: 0.5px 0.5px 0.5px black, 0 0 0.2em #ffbe33, 0 0 0.1em #ffbe33;
   font-size: 20px;
+}
+.title_shadow {
+  @apply text-white font-logoFont font-bold;
+  text-shadow: 0.5px 0.5px 0.5px black, 0 0 0.2em #ffbe33, 0 0 0.1em #ffbe33;
 }
 
 .my-text-shadow {
