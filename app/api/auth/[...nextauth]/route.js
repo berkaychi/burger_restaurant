@@ -1,59 +1,61 @@
-import { connectDB } from "@/utils/connect";
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "@/schema/admin";
+import dbConnect from "@/lib/mongodb";
+import User from "@/models/User";
 import bcrypt from "bcrypt";
-async function login(credentials) {
-  try {
-    connectDB();
-    const user = await User.findOne({ username: credentials.username });
-    if (!user) throw new Error("Wrong Credentials.");
-    const isCorrect = await bcrypt.compare(credentials.password, user.password);
-    if (!isCorrect) throw new Error("Wrong Credentials.");
-    return user;
-  } catch (error) {
-    console.log("error while logging in.");
-    throw new Error("Something went wrong.");
-  }
-}
-export const authOptions = {
-  pages: {
-    signIn: "/login",
-  },
+
+const handler = NextAuth({
   providers: [
     CredentialsProvider({
-      name: "credentials",
-      credentials: {},
-
+      name: "Admin Login",
+      credentials: {
+        username: {
+          label: "Kullanıcı Adı",
+          type: "text",
+          placeholder: "admin",
+        },
+        password: { label: "Şifre", type: "password" },
+      },
       async authorize(credentials) {
-        try {
-          const user = await login(credentials);
-          console.log({ credentials });
-          return user;
-        } catch (error) {
-          throw new Error("Failed to login.");
+        const { username, password } = credentials;
+
+        await dbConnect();
+
+        const user = await User.findOne({ username });
+
+        if (!user) {
+          throw new Error("Geçersiz kullanıcı adı veya şifre");
         }
+
+        const isValid = await bcrypt.compare(password, user.password);
+
+        if (!isValid) {
+          throw new Error("Geçersiz kullanıcı adı veya şifre");
+        }
+
+        return {
+          id: user._id.toString(),
+          name: user.username,
+        };
       },
     }),
   ],
+  pages: {
+    signIn: "/admin/login",
+  },
   callbacks: {
+    async session({ session, token }) {
+      session.user = token.user;
+      return session;
+    },
     async jwt({ token, user }) {
       if (user) {
-        token.username = user.username;
-        token.id = user.id;
+        token.user = user;
       }
       return token;
     },
-    async session({ session, token }) {
-      if (token) {
-        session.user.username = token.username;
-        session.user.id = token.id;
-      }
-
-      return session;
-    },
   },
-};
+  secret: process.env.NEXTAUTH_SECRET,
+});
 
-const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

@@ -4,10 +4,21 @@ import { useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
-import burgers from "@/components/product/Burgers";
 const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
 export default function BurgerSlider() {
+  const [burgers, setBurgers] = useState([]);
+
+  useEffect(() => {
+    const fetchBurgers = async () => {
+      const res = await fetch("/api/burgers");
+      const data = await res.json();
+      setBurgers(data);
+    };
+
+    fetchBurgers();
+  }, []);
+
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -65,7 +76,7 @@ export default function BurgerSlider() {
           <div key={idx} className="flex justify-center mx-auto">
             <div className="w-full px-3">
               <Image
-                src={burger.img}
+                src={burger.image}
                 alt={burger.name}
                 className="rounded-lg cursor-pointer"
                 width={600}

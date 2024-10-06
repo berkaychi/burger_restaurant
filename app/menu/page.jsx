@@ -1,6 +1,21 @@
-import burgers from "@/components/product/Burgers";
+"use client";
 import Image from "next/image";
-const page = () => {
+
+import { useState, useEffect } from "react";
+
+export default function Menu() {
+  const [burgers, setBurgers] = useState([]);
+
+  useEffect(() => {
+    const fetchBurgers = async () => {
+      const res = await fetch("/api/burgers");
+      const data = await res.json();
+      setBurgers(data);
+    };
+
+    fetchBurgers();
+  }, []);
+
   return (
     <div className="flex h-full w-full bg-slate-200">
       <div className="container  mx-auto mb-20">
@@ -17,7 +32,7 @@ const page = () => {
               <div key={index} className="group relative">
                 <div className="overflow-hidden rounded-lg shadow-lg">
                   <Image
-                    src={burger.img}
+                    src={burger.image}
                     alt={burger.name}
                     width={400}
                     height={160}
@@ -34,6 +49,4 @@ const page = () => {
       </div>
     </div>
   );
-};
-
-export default page;
+}
