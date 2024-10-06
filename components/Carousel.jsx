@@ -5,7 +5,7 @@ const Carousel = () => {
   return (
     <div className="relative sm:h-[calc(100vh-64px)] w-full h-[50vh]">
       <Image
-        src="/assets/images/deneme3.jpeg"
+        src="/assets/images/carousel-image.jpeg"
         alt="Carousel Image"
         layout="fill"
         objectFit="cover"

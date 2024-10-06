@@ -21,7 +21,12 @@ const Nav = () => {
     <nav className="h-16 bg-secondary">
       <div className="flex items-center justify-between h-full container mx-auto text-white px-6">
         <Link href="/" className="flex hover:text-primary hover:transition-all">
-          <Image src="/assets/images/babs-burger.png" width={60} height={60} />
+          <Image
+            src="/assets/images/babs-logo.png"
+            alt="Bab's logo"
+            width={60}
+            height={60}
+          />
         </Link>
 
         {/*#Desktop Navigation*/}
