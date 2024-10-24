@@ -3,14 +3,11 @@ import Link from "next/link";
 import { TfiAlignJustify } from "react-icons/tfi";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { FaUserAlt } from "react-icons/fa";
-import { FaBasketShopping } from "react-icons/fa6";
 import Image from "next/image";
-import OutsideClickHandler from "react-outside-click-handler";
 import Search from "./Search";
 
 const Nav = () => {
-  const [isSearchClick, setisSearchClick] = useState(false);
+  const [isSearchClick, setIsSearchClick] = useState(false);
   const [toggleDropdown, settoggleDropdown] = useState(false);
 
   const handleToggleDropdown = () => {
@@ -51,22 +48,16 @@ const Nav = () => {
         </div>
 
         <div className="sm:flex hidden gap-3">
-          <button>
-            <FaSearch
-              className="hover:text-primary transition-all"
-              onClick={() => setisSearchClick(true)}
-            />
+          <button onClick={() => setIsSearchClick(true)}>
+            <FaSearch className="hover:text-primary transition-all" />
           </button>
         </div>
 
         {/*#Mobile Navigation*/}
 
         <div className="sm:hidden flex relative gap-x-3 justify-between items-center">
-          <button>
-            <FaSearch
-              className="hover:text-primary transition-all"
-              onClick={() => setisSearchClick(true)}
-            />
+          <button onClick={() => setIsSearchClick(true)}>
+            <FaSearch className="hover:text-primary transition-all" />
           </button>
 
           <div className="flex">
@@ -76,7 +67,7 @@ const Nav = () => {
             />
 
             {toggleDropdown && (
-              <div className="absolute  mt-2  bg-white shadow-lg dropdown z-10">
+              <div className="absolute mt-2 bg-white shadow-lg dropdown z-10">
                 <div className="flex flex-col">
                   <Link href="/" className="dropdown_link">
                     ANASAYFA
@@ -95,7 +86,7 @@ const Nav = () => {
           </div>
         </div>
       </div>
-      {isSearchClick && <Search setisSearchClick={setisSearchClick} />}
+      {isSearchClick && <Search setIsSearchClick={setIsSearchClick} />}
     </nav>
   );
 };

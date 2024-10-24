@@ -1,5 +1,5 @@
 import connect from "@/utils/connect";
-import Burger from "@/models/Burger";
+import Product from "@/models/Product";
 import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -16,19 +16,18 @@ export async function POST(request) {
     const formData = await request.formData();
     const name = formData.get("name");
     const imageFile = formData.get("image");
+    const category = formData.get("category");
 
-    if (!name || !imageFile) {
+    if (!name || !imageFile || !category) {
       return NextResponse.json({ message: "Eksik veri" }, { status: 400 });
     }
 
-    // Resmi buffer olarak al
     const arrayBuffer = await imageFile.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Resmi Cloudinary'e yükle
     const uploadResult = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        { folder: "burgers" },
+        { folder: "products" },
         (error, result) => {
           if (error) reject(error);
           else resolve(result);
@@ -37,13 +36,13 @@ export async function POST(request) {
       stream.end(buffer);
     });
 
-    // Yeni burgeri oluştur
-    const newBurger = await Burger.create({
+    const newProduct = await Product.create({
       name,
       image: uploadResult.secure_url,
+      category,
     });
 
-    return NextResponse.json(newBurger, { status: 201 });
+    return NextResponse.json(newProduct, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "Sunucu hatası" }, { status: 500 });
@@ -53,8 +52,8 @@ export async function POST(request) {
 export async function GET(request) {
   try {
     await connect();
-    const burgers = await Burger.find({});
-    return NextResponse.json(burgers, { status: 200 });
+    const products = await Product.find({});
+    return NextResponse.json(products, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "Sunucu hatası" }, { status: 500 });

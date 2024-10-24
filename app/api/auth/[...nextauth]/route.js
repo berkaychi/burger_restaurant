@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import dbConnect from "@/lib/mongodb";
+import dbConnect from "@/utils/connect";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
 

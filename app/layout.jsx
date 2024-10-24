@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Nav from "@/components/Nav";
-import { SessionProvider } from "next-auth/react";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,6 +20,7 @@ export default function RootLayout({ children }) {
           <Nav />
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

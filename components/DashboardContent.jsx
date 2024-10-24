@@ -5,32 +5,40 @@ import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 
 export default function DashboardContent() {
-  const [burgers, setBurgers] = useState([]);
+  const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [category, setCategory] = useState("");
   const { data: session } = useSession();
 
   useEffect(() => {
     if (session) {
-      fetchBurgers();
+      fetchProducts();
     }
   }, [session]);
 
-  const fetchBurgers = async () => {
+  const fetchProducts = async () => {
     try {
-      const res = await fetch("/api/burgers");
+      const res = await fetch("/api/products");
       if (!res.ok) {
-        throw new Error("Burger verileri alınamadı.");
+        throw new Error("Ürün verileri alınamadı.");
       }
       const data = await res.json();
-      setBurgers(data);
+      setProducts(data);
     } catch (error) {
       console.error(error);
       alert(error.message);
     }
   };
 
-  const handleAddBurger = async (e) => {
+  const groupedProducts = products.reduce((groups, product) => {
+    const category = product.category || "Diğer";
+    if (!groups[category]) groups[category] = [];
+    groups[category].push(product);
+    return groups;
+  }, {});
+
+  const handleAddProduct = async (e) => {
     e.preventDefault();
 
     if (!imageFile) {
@@ -38,40 +46,47 @@ export default function DashboardContent() {
       return;
     }
 
+    if (!category) {
+      alert("Lütfen bir kategori seçin.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("image", imageFile);
+    formData.append("category", category);
 
     try {
-      const res = await fetch("/api/burgers", {
+      const res = await fetch("/api/products", {
         method: "POST",
         body: formData,
       });
 
       if (!res.ok) {
-        throw new Error("Burger eklenirken bir hata oluştu.");
+        throw new Error("Ürün eklenirken bir hata oluştu.");
       }
 
       setName("");
       setImageFile(null);
-      fetchBurgers();
+      setCategory("");
+      fetchProducts();
     } catch (error) {
       console.error(error);
       alert(error.message);
     }
   };
 
-  const handleDeleteBurger = async (id) => {
+  const handleDeleteProduct = async (id) => {
     try {
-      const res = await fetch(`/api/burgers/${id}`, {
+      const res = await fetch(`/api/products/${id}`, {
         method: "DELETE",
       });
 
       if (!res.ok) {
-        throw new Error("Burger silinirken bir hata oluştu.");
+        throw new Error("Ürün silinirken bir hata oluştu.");
       }
 
-      fetchBurgers();
+      fetchProducts();
     } catch (error) {
       console.error(error);
       alert(error.message);
@@ -89,7 +104,7 @@ export default function DashboardContent() {
   return (
     <div className="p-8">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Burger Yönetimi</h1>
+        <h1 className="text-2xl font-bold">Ürün Yönetimi</h1>
         <button
           onClick={() => signOut()}
           className="bg-red-500 text-white px-4 py-2"
@@ -98,9 +113,24 @@ export default function DashboardContent() {
         </button>
       </div>
 
-      <form onSubmit={handleAddBurger} className="mb-8">
+      <form onSubmit={handleAddProduct} className="mb-8">
         <div className="flex flex-col mb-4">
-          <label className="mb-2">Burger Adı</label>
+          <label className="mb-2">Kategori</label>
+          <select
+            className="p-2 border"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          >
+            <option value="">Kategori Seçin</option>
+            <option value="burger">Burger</option>
+            <option value="side">Yan Lezzet</option>
+            <option value="drink">İçecek</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col mb-4">
+          <label className="mb-2">Ürün Adı</label>
           <input
             type="text"
             className="p-2 border"
@@ -126,27 +156,32 @@ export default function DashboardContent() {
         </button>
       </form>
 
-      <h2 className="text-xl font-bold mb-4">Mevcut Burgerler</h2>
-      <ul>
-        {burgers.map((burger) => (
-          <li key={burger._id} className="flex items-center mb-4">
-            <Image
-              src={burger.image}
-              alt={burger.name}
-              className="w-16 h-16 mr-4"
-              width={200}
-              height={200}
-            />
-            <span className="flex-1">{burger.name}</span>
-            <button
-              onClick={() => handleDeleteBurger(burger._id)}
-              className="bg-red-500 text-white px-4 py-2"
-            >
-              Sil
-            </button>
-          </li>
-        ))}
-      </ul>
+      <h2 className="text-xl font-bold mb-4">Mevcut Ürünler</h2>
+      {Object.keys(groupedProducts).map((category) => (
+        <div key={category}>
+          <h3 className="text-lg font-semibold mb-2 capitalize">{category}</h3>
+          <ul>
+            {groupedProducts[category].map((product) => (
+              <li key={product._id} className="flex items-center mb-4">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  className="w-16 h-16 mr-4"
+                  width={200}
+                  height={200}
+                />
+                <span className="flex-1">{product.name}</span>
+                <button
+                  onClick={() => handleDeleteProduct(product._id)}
+                  className="bg-red-500 text-white px-4 py-2"
+                >
+                  Sil
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }

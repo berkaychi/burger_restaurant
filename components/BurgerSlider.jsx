@@ -10,13 +10,25 @@ export default function BurgerSlider() {
   const [burgers, setBurgers] = useState([]);
 
   useEffect(() => {
-    const fetchBurgers = async () => {
-      const res = await fetch("/api/burgers");
-      const data = await res.json();
-      setBurgers(data);
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("/api/products");
+        if (!res.ok) {
+          throw new Error("Ürünler alınamadı.");
+        }
+        const data = await res.json();
+        // Sadece "burger" kategorisindeki ürünleri filtreleyin
+        const burgerProducts = data.filter(
+          (product) => product.category === "burger"
+        );
+        setBurgers(burgerProducts);
+      } catch (error) {
+        console.error(error);
+        alert(error.message);
+      }
     };
 
-    fetchBurgers();
+    fetchProducts();
   }, []);
 
   const [isClient, setIsClient] = useState(false);
@@ -67,7 +79,7 @@ export default function BurgerSlider() {
   }
 
   return (
-    <div className="w-full bg-gray-300">
+    <div className="w-full bg-gray-300 pb-16">
       <h1 className="text-center text-3xl font-semibold mb-4 p-8">
         Burgerlerimiz
       </h1>

@@ -1,10 +1,9 @@
-// lib/mongodb.js
 import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  throw new Error("Lütfen .env.local dosyanıza MONGODB_URI ekleyin");
+  throw new Error("MONGODB_URI hatalı.");
 }
 
 let isConnected = false;
@@ -16,7 +15,7 @@ export default async function dbConnect() {
 
   try {
     await mongoose.connect(MONGODB_URI, {
-      dbName: "veritabani_adi", // Veritabanı adınızı girin
+      dbName: "veritabani_adi",
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
